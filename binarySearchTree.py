@@ -24,6 +24,21 @@ class NodeTree:
         if self.right:
             self.right.inorderTraversal()
 
+    def preorderTraversal(self):
+        print(self.value)
+        if self.left:
+            self.left.preorderTraversal()
+        if self.right:
+            self.right.preorderTraversal()
+    
+    def postorderTraversal(self):
+        if self.left:
+            self.left.postorderTraversal()
+        if self.right:
+            self.right.postorderTraversal()
+        print(self.value)
+
+
 tree = NodeTree(6)
 tree.insert(5)
 tree.insert(2)
@@ -38,4 +53,7 @@ tree.insert(11)
 tree.insert(4)
 tree.insert(2)
 
-tree.inorderTraversal()
+# tree.inorderTraversal()
+# tree.preorderTraversal()
+tree.postorderTraversal()
+
