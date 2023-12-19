@@ -1,0 +1,53 @@
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n - 1):
+        for j in range(0, n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+
+def binary_search(arr, target):
+    low, high = 0, len(arr) - 1
+
+    while low <= high:
+        mid = (low + high) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            low = mid + 1
+        else:
+            high = mid - 1
+
+    return -1
+
+try:
+    num_elements = int(input("Enter the number of elements (at least 10): "))
+except ValueError:
+    print("Invalid input. Please enter a valid number.")
+    exit()
+
+
+numbers = []
+for _ in range(num_elements):
+    try:
+        num = int(input("Enter a whole number: "))
+        numbers.append(num)
+    except ValueError:
+        print("Invalid input. Please enter a valid whole number.")
+        exit()
+
+if len(numbers) >= 10:
+    print("\nUnsorted List:", numbers)
+
+    bubble_sort(numbers)
+    print("Sorted List:", numbers)
+
+
+    search_number = int(input("\nEnter a number to search: "))
+    search_result = binary_search(numbers, search_number)
+
+    if search_result != -1:
+        print(f"{search_number} found at index {search_result}.")
+    else:
+        print(f"{search_number} not found in the list.")
+else:
+    print("You entered fewer than 10 numbers. Sorting and searching will not be performed.")
