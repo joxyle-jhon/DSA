@@ -1,0 +1,92 @@
+import hashlib
+
+class PasswordManager:
+    def __init__(self):
+        self.passwords = {}
+
+    def add_password(self, website, username, password):
+        key = self.generate_key(website, username)
+        hashed_password = self.hash_password(password)
+        self.passwords[key] = hashed_password
+        print("======================================\n")
+        print("Password Added Successfully")
+
+    def retrieve_password(self, website, username):
+        key = self.generate_key(website, username)
+        hashed_password = self.passwords.get(key, None)
+        if hashed_password:
+            print("======================================")
+            print(f"Password for {username} on {website}: {hashed_password}")
+            print("======================================")
+        else:
+            print("======================================")
+            print("Password not found")
+            print("======================================")
+
+    def delete_password(self, website, username):
+        key = self.generate_key(website, username)
+        if key in self.passwords:
+            del self.passwords[key]
+            print("======================================")
+            print("Successful Password Deletion")
+            print("======================================")
+            self.retrieve_password(website, username)
+        else:
+            print("======================================")
+            print("Password not found")
+            print("======================================")
+
+    def view_all_passwords(self):
+        print("======================================")
+        print("Stored Accounts:")
+        for (website, username), hashed_password in self.passwords.items():
+            print(f"Website: {website}, Username: {username}")
+        print("======================================")
+
+    def generate_key(self, website, username):
+        return website, username
+
+    def hash_password(self, password):
+        return hashlib.sha256(password.encode()).hexdigest()
+
+def main():
+    password_manager = PasswordManager()
+
+    while True:
+        print("\nOptions:")
+        print("1. Add Password")
+        print("2. Retrieve Password")
+        print("3. Delete Password")
+        print("4. View All Accounts")
+        print("5. Exit")
+
+        choice = input("Enter your choice (1/2/3/4/5): ")
+
+        if choice == "1":
+            website = input("Enter website: ")
+            username = input("Enter username: ")
+            password = input("Enter password: ")
+            password_manager.add_password(website, username, password)
+
+        elif choice == "2":
+            website = input("Enter website: ")
+            username = input("Enter username: ")
+            password_manager.retrieve_password(website, username)
+
+        elif choice == "3":
+            website = input("Enter website: ")
+            username = input("Enter username: ")
+            password_manager.delete_password(website, username)
+
+        elif choice == "4":
+            password_manager.view_all_passwords()
+
+        elif choice == "5":
+            print("Exiting Password Manager. Goodbye!")
+            break
+
+        else:
+            print("Invalid choice. Please enter a valid option.")
+
+if __name__ == "__main__":
+    main()
